@@ -72,6 +72,12 @@ impl <'a> Parser<'a> {
                 }
                 Ok(expr)
             }
+            Token::Log => {
+                self.get_next_token()?;
+                let expr = self.generate_ast(OperPrec::PowLog)?;
+
+                Ok(Node::Log2(Box::new(expr)))
+            }
             _ => Err(ParseError::UnableToParse("Unable to parse".to_string())),
         }
     }
@@ -113,9 +119,14 @@ impl <'a> Parser<'a> {
             }
             Token::Caret => {
                 self.get_next_token()?;
-                let right_expr = self.generate_ast(OperPrec::Power)?;
+                let right_expr = self.generate_ast(OperPrec::PowLog)?;
                 Ok(Node::Caret(Box::new(left_expr),Box::new(right_expr)))
-            }
+            },
+            // Token::Log => {
+            //     self.get_next_token()?;
+            //     let expr = self.generate_ast(OperPrec::PowLog)?;
+            //     Ok(Node::Log2(Box::new(expr)))
+            // }
             _ => Err(ParseError::InvalidOperator(format!("Please enter valid operator {:?}", self.current_token))),
         }
     }

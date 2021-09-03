@@ -12,7 +12,7 @@ fn main() {
       Ok(_) => {
         match evaluate(input) {
           Ok(val) => println!("The answer iiis: {}\n",val),
-          Err(_) => println!("Error :("),
+          Err(e) => println!("Error :( {}", e),
         }
       }
       Err(error) => println!("Error: {}", error),

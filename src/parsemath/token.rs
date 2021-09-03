@@ -6,6 +6,7 @@ pub enum Token {
     Multiply,
     Divide,
     Caret,
+    Log,
     LeftParen,
     RightParen,
     Num(f64),
@@ -17,7 +18,7 @@ pub enum OperPrec {
     DefaultZero,
     AddSub,
     MulDiv,
-    Power,
+    PowLog,
     Negative,
 }
 
@@ -28,8 +29,8 @@ impl Token {
         match *self {
             Add | Subtract => AddSub,
             Multiply | Divide => MulDiv,
-            Caret => Power,
-
+            Caret => PowLog,
+            Log => PowLog,
             _ => DefaultZero,
         }
     }

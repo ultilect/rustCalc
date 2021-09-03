@@ -7,6 +7,7 @@ pub enum Node {
     Multiply(Box<Node>, Box<Node>),
     Divide(Box<Node>, Box<Node>),
     Caret(Box<Node>, Box<Node>),
+    Log2(Box<Node>),
     Negative(Box<Node>),
     Number(f64)
 }
@@ -20,6 +21,7 @@ pub fn eval(expr: Node) -> Result<f64, Box<dyn error::Error>> {
         Multiply(expr1, expr2) => Ok(eval(*expr1)? * eval(*expr2)?),
         Divide(expr1, expr2) => Ok(eval(*expr1)? / eval(*expr2)?),
         Caret(expr1, expr2) => Ok(eval(*expr1)?.powf(eval(*expr2)?)),
+        Log2(expr1) => Ok(eval(*expr1)?.log2()),
         Negative(expr1) => Ok(-(eval(*expr1)?)),
     }
 }

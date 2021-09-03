@@ -36,6 +36,19 @@ impl<'a> Iterator for Tokenizer<'a> {
                 }
                 Some(Token::Num(number.parse::<f64>().unwrap()))
             },
+            Some('l') => {
+                let mut is_log = next_char?.to_string();
+                while is_log.len() < 3 && self.expr.peek() != None {
+                    is_log.push(self.expr.next()?);
+                }
+                let str = String::from("log");
+                match is_log {
+                    str =>  {
+                        Some(Token::Log)
+                    },
+                    _ => None,
+                }
+            }
             Some('+') => Some(Token::Add),
             Some('-') => Some(Token::Subtract),
             Some('*') => Some(Token::Multiply),
